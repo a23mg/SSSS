@@ -1,0 +1,899 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>PinkWave – Modern SaaS Platform</title>
+
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- Font Awesome Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
+
+  <!-- Tailwind Config & Custom Styles -->
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          fontFamily: { inter: ['Inter', 'sans-serif'] },
+          colors: {
+            pink: {
+              50:  '#fdf2f8',
+              100: '#fce7f3',
+              200: '#fbcfe8',
+              300: '#f9a8d4',
+              400: '#f472b6',
+              500: '#ec4899',
+              600: '#db2777',
+              700: '#be185d',
+              800: '#9d174d',
+              900: '#831843',
+            },
+          },
+        },
+      },
+    };
+  </script>
+
+  <style>
+    /* ── Base ────────────────────────────────────────────── */
+    body { font-family: 'Inter', sans-serif; }
+
+    /* ── Gradient utilities ──────────────────────────────── */
+    .gradient-hero {
+      background: linear-gradient(135deg, #831843 0%, #be185d 30%, #ec4899 60%, #f9a8d4 100%);
+    }
+    .gradient-cta {
+      background: linear-gradient(135deg, #9d174d 0%, #db2777 50%, #f472b6 100%);
+    }
+    .gradient-text {
+      background: linear-gradient(90deg, #ec4899, #be185d);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    /* ── Navbar scroll shadow ────────────────────────────── */
+    .nav-scrolled { box-shadow: 0 2px 20px rgba(190,24,93,.2); }
+
+    /* ── Feature card hover ──────────────────────────────── */
+    .feature-card {
+      transition: transform .3s ease, box-shadow .3s ease;
+    }
+    .feature-card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 20px 40px rgba(236,72,153,.2);
+    }
+
+    /* ── Pricing card hover ──────────────────────────────── */
+    .pricing-card {
+      transition: transform .3s ease, box-shadow .3s ease;
+    }
+    .pricing-card:hover {
+      transform: translateY(-4px);
+    }
+
+    /* ── Testimonial card ────────────────────────────────── */
+    .testimonial-card {
+      transition: transform .3s ease, box-shadow .3s ease;
+    }
+    .testimonial-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 16px 32px rgba(236,72,153,.15);
+    }
+
+    /* ── Mobile menu animation ───────────────────────────── */
+    #mobile-menu { transition: max-height .35s ease, opacity .35s ease; }
+    #mobile-menu.closed { max-height: 0; opacity: 0; overflow: hidden; }
+    #mobile-menu.open   { max-height: 600px; opacity: 1; }
+  </style>
+</head>
+
+<!-- ─────────────────────────────────────────────────────────
+     BODY – dark mode class toggled via JS
+     ───────────────────────────────────────────────────────── -->
+<body class="bg-white dark:bg-gray-950 text-gray-800 dark:text-gray-100 font-inter">
+
+<!-- ═══════════════════════════════════════════════════════
+     SECTION: NAVBAR
+     ═══════════════════════════════════════════════════════ -->
+<nav id="navbar"
+     class="fixed top-0 left-0 right-0 z-50 bg-white/90 dark:bg-gray-950/90 backdrop-blur-md border-b border-pink-100 dark:border-pink-900/30 transition-all duration-300">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="flex items-center justify-between h-16">
+
+      <!-- Logo -->
+      <a href="#" class="flex items-center gap-2 font-extrabold text-xl">
+        <span class="w-8 h-8 rounded-lg gradient-cta flex items-center justify-center text-white text-sm font-black">P</span>
+        <span class="gradient-text">PinkWave</span>
+      </a>
+
+      <!-- Desktop Nav Links -->
+      <ul class="hidden md:flex items-center gap-8 text-sm font-medium">
+        <li><a href="#home"         class="text-gray-600 dark:text-gray-300 hover:text-pink-600 dark:hover:text-pink-400 transition-colors">Home</a></li>
+        <li><a href="#features"     class="text-gray-600 dark:text-gray-300 hover:text-pink-600 dark:hover:text-pink-400 transition-colors">Features</a></li>
+        <li><a href="#pricing"      class="text-gray-600 dark:text-gray-300 hover:text-pink-600 dark:hover:text-pink-400 transition-colors">Pricing</a></li>
+        <li><a href="#contact"      class="text-gray-600 dark:text-gray-300 hover:text-pink-600 dark:hover:text-pink-400 transition-colors">Contact</a></li>
+      </ul>
+
+      <!-- Desktop Right Controls -->
+      <div class="hidden md:flex items-center gap-3">
+        <!-- Dark Mode Toggle -->
+        <button id="dark-toggle"
+                aria-label="Toggle dark mode"
+                class="w-9 h-9 rounded-full flex items-center justify-center text-gray-500 dark:text-gray-400 hover:bg-pink-50 dark:hover:bg-pink-900/20 transition-colors">
+          <i id="dark-icon" class="fa-solid fa-moon text-base"></i>
+        </button>
+        <!-- CTA Button -->
+        <a href="#pricing"
+           class="px-5 py-2 rounded-full gradient-cta text-white text-sm font-semibold shadow hover:opacity-90 transition-opacity">
+          Get Started
+        </a>
+      </div>
+
+      <!-- Mobile Hamburger -->
+      <button id="menu-toggle"
+              aria-label="Toggle menu"
+              class="md:hidden w-9 h-9 flex items-center justify-center rounded-lg text-gray-600 dark:text-gray-300 hover:bg-pink-50 dark:hover:bg-pink-900/20 transition-colors">
+        <i id="menu-icon" class="fa-solid fa-bars text-lg"></i>
+      </button>
+    </div>
+  </div>
+
+  <!-- Mobile Menu -->
+  <div id="mobile-menu" class="closed md:hidden bg-white dark:bg-gray-950 border-t border-pink-100 dark:border-pink-900/30">
+    <div class="max-w-7xl mx-auto px-4 py-4 flex flex-col gap-3">
+      <a href="#home"         class="py-2 text-gray-700 dark:text-gray-300 hover:text-pink-600 dark:hover:text-pink-400 font-medium transition-colors" onclick="closeMenu()">Home</a>
+      <a href="#features"     class="py-2 text-gray-700 dark:text-gray-300 hover:text-pink-600 dark:hover:text-pink-400 font-medium transition-colors" onclick="closeMenu()">Features</a>
+      <a href="#pricing"      class="py-2 text-gray-700 dark:text-gray-300 hover:text-pink-600 dark:hover:text-pink-400 font-medium transition-colors" onclick="closeMenu()">Pricing</a>
+      <a href="#contact"      class="py-2 text-gray-700 dark:text-gray-300 hover:text-pink-600 dark:hover:text-pink-400 font-medium transition-colors" onclick="closeMenu()">Contact</a>
+      <div class="flex items-center gap-3 pt-2 border-t border-pink-100 dark:border-pink-900/30">
+        <button id="dark-toggle-mobile"
+                aria-label="Toggle dark mode"
+                class="w-9 h-9 rounded-full flex items-center justify-center text-gray-500 dark:text-gray-400 hover:bg-pink-50 dark:hover:bg-pink-900/20 transition-colors">
+          <i id="dark-icon-mobile" class="fa-solid fa-moon text-base"></i>
+        </button>
+        <a href="#pricing"
+           class="flex-1 text-center py-2 rounded-full gradient-cta text-white text-sm font-semibold shadow hover:opacity-90 transition-opacity"
+           onclick="closeMenu()">
+          Get Started
+        </a>
+      </div>
+    </div>
+  </div>
+</nav>
+
+
+<!-- ═══════════════════════════════════════════════════════
+     SECTION: HERO
+     ═══════════════════════════════════════════════════════ -->
+<section id="home" class="min-h-screen gradient-hero flex items-center pt-16">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24 w-full">
+    <div class="flex flex-col lg:flex-row items-center gap-12">
+
+      <!-- Hero Text -->
+      <div class="flex-1 text-center lg:text-left">
+        <!-- Badge -->
+        <span class="inline-flex items-center gap-2 bg-white/20 backdrop-blur-sm text-white text-xs font-semibold px-4 py-1.5 rounded-full mb-6 border border-white/30">
+          <i class="fa-solid fa-sparkles text-pink-200"></i> New – Version 2.0 is here
+        </span>
+
+        <!-- Heading -->
+        <h1 class="text-4xl sm:text-5xl xl:text-6xl font-black text-white leading-tight mb-6">
+          Supercharge Your<br />
+          <span class="text-pink-200">Business Growth</span><br />
+          With PinkWave
+        </h1>
+
+        <!-- Subtitle -->
+        <p class="text-lg text-pink-100 max-w-xl mx-auto lg:mx-0 mb-10 leading-relaxed">
+          The all-in-one SaaS platform that helps modern teams ship faster, collaborate smarter,
+          and scale effortlessly — all wrapped in one beautiful dashboard.
+        </p>
+
+        <!-- CTA Buttons -->
+        <div class="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
+          <!-- Primary -->
+          <a href="#pricing"
+             class="px-8 py-4 bg-white text-pink-700 font-bold rounded-2xl shadow-xl hover:shadow-2xl hover:bg-pink-50 transition-all duration-300 text-center">
+            Start Free Trial
+            <i class="fa-solid fa-arrow-right ml-2"></i>
+          </a>
+          <!-- Outline -->
+          <a href="#features"
+             class="px-8 py-4 border-2 border-white text-white font-bold rounded-2xl hover:bg-white/10 transition-all duration-300 text-center">
+            See Features
+            <i class="fa-solid fa-play ml-2 text-sm"></i>
+          </a>
+        </div>
+
+        <!-- Social Proof -->
+        <div class="mt-12 flex items-center gap-4 justify-center lg:justify-start">
+          <div class="flex -space-x-3">
+            <img src="https://i.pravatar.cc/40?img=1" alt="User" class="w-10 h-10 rounded-full border-2 border-white object-cover" />
+            <img src="https://i.pravatar.cc/40?img=2" alt="User" class="w-10 h-10 rounded-full border-2 border-white object-cover" />
+            <img src="https://i.pravatar.cc/40?img=3" alt="User" class="w-10 h-10 rounded-full border-2 border-white object-cover" />
+            <img src="https://i.pravatar.cc/40?img=4" alt="User" class="w-10 h-10 rounded-full border-2 border-white object-cover" />
+          </div>
+          <p class="text-pink-100 text-sm"><strong class="text-white">12,000+</strong> happy customers</p>
+        </div>
+      </div>
+
+      <!-- Hero Image / Illustration -->
+      <div class="flex-1 flex justify-center lg:justify-end">
+        <div class="relative w-full max-w-lg">
+          <!-- Decorative glow blobs -->
+          <div class="absolute -top-10 -left-10 w-64 h-64 bg-pink-400/30 rounded-full blur-3xl"></div>
+          <div class="absolute -bottom-10 -right-10 w-48 h-48 bg-white/10 rounded-full blur-2xl"></div>
+
+          <!-- Dashboard card mockup -->
+          <div class="relative bg-white/10 backdrop-blur-xl border border-white/20 rounded-3xl p-6 shadow-2xl">
+            <!-- Top bar -->
+            <div class="flex items-center gap-2 mb-5">
+              <div class="w-3 h-3 rounded-full bg-pink-300"></div>
+              <div class="w-3 h-3 rounded-full bg-pink-200"></div>
+              <div class="w-3 h-3 rounded-full bg-white/50"></div>
+              <div class="flex-1 h-3 bg-white/10 rounded-full ml-2"></div>
+            </div>
+
+            <!-- Stats row -->
+            <div class="grid grid-cols-3 gap-3 mb-5">
+              <div class="bg-white/15 rounded-xl p-3 text-center">
+                <p class="text-pink-200 text-xs mb-1">Revenue</p>
+                <p class="text-white font-bold text-lg">$48k</p>
+                <p class="text-green-300 text-xs">▲ 12%</p>
+              </div>
+              <div class="bg-white/15 rounded-xl p-3 text-center">
+                <p class="text-pink-200 text-xs mb-1">Users</p>
+                <p class="text-white font-bold text-lg">12.4k</p>
+                <p class="text-green-300 text-xs">▲ 8%</p>
+              </div>
+              <div class="bg-white/15 rounded-xl p-3 text-center">
+                <p class="text-pink-200 text-xs mb-1">Deals</p>
+                <p class="text-white font-bold text-lg">340</p>
+                <p class="text-green-300 text-xs">▲ 5%</p>
+              </div>
+            </div>
+
+            <!-- Chart bars -->
+            <div class="bg-white/10 rounded-2xl p-4 mb-4">
+              <p class="text-white text-xs font-semibold mb-3">Monthly Growth</p>
+              <div class="flex items-end gap-2 h-20">
+                <div class="flex-1 bg-pink-300/60 rounded-t-md" style="height:40%"></div>
+                <div class="flex-1 bg-pink-300/60 rounded-t-md" style="height:60%"></div>
+                <div class="flex-1 bg-pink-300/60 rounded-t-md" style="height:50%"></div>
+                <div class="flex-1 bg-white rounded-t-md" style="height:80%"></div>
+                <div class="flex-1 bg-pink-300/60 rounded-t-md" style="height:70%"></div>
+                <div class="flex-1 bg-pink-300/60 rounded-t-md" style="height:90%"></div>
+              </div>
+            </div>
+
+            <!-- Task list -->
+            <div class="space-y-2">
+              <div class="flex items-center gap-2 bg-white/10 rounded-xl px-3 py-2">
+                <i class="fa-solid fa-circle-check text-green-400 text-sm"></i>
+                <span class="text-white text-xs">Campaign launched successfully</span>
+              </div>
+              <div class="flex items-center gap-2 bg-white/10 rounded-xl px-3 py-2">
+                <i class="fa-solid fa-clock text-pink-300 text-sm"></i>
+                <span class="text-white text-xs">Analytics report generating…</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+
+<!-- ═══════════════════════════════════════════════════════
+     SECTION: FEATURES
+     ═══════════════════════════════════════════════════════ -->
+<section id="features" class="py-24 bg-pink-50 dark:bg-gray-900">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+
+    <!-- Section Header -->
+    <div class="text-center mb-16">
+      <span class="inline-block bg-pink-100 dark:bg-pink-900/40 text-pink-700 dark:text-pink-300 text-xs font-semibold px-4 py-1.5 rounded-full mb-4">
+        Features
+      </span>
+      <h2 class="text-3xl sm:text-4xl font-black text-gray-900 dark:text-white mb-4">
+        Everything you need to <span class="gradient-text">succeed</span>
+      </h2>
+      <p class="text-gray-500 dark:text-gray-400 max-w-xl mx-auto">
+        PinkWave packs all the tools modern startups need into one sleek, powerful platform.
+      </p>
+    </div>
+
+    <!-- Feature Cards Grid -->
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+
+      <!-- Card 1 -->
+      <div class="feature-card bg-white dark:bg-gray-800 rounded-3xl p-8 shadow-sm border border-pink-100 dark:border-pink-900/30">
+        <div class="w-14 h-14 rounded-2xl bg-pink-100 dark:bg-pink-900/40 flex items-center justify-center mb-6">
+          <i class="fa-solid fa-bolt text-pink-600 dark:text-pink-400 text-2xl"></i>
+        </div>
+        <h3 class="text-lg font-bold text-gray-900 dark:text-white mb-3">Lightning Fast</h3>
+        <p class="text-gray-500 dark:text-gray-400 text-sm leading-relaxed">
+          Built on edge infrastructure with sub-100ms response times globally. Your users will never wait.
+        </p>
+      </div>
+
+      <!-- Card 2 -->
+      <div class="feature-card bg-white dark:bg-gray-800 rounded-3xl p-8 shadow-sm border border-pink-100 dark:border-pink-900/30">
+        <div class="w-14 h-14 rounded-2xl bg-pink-100 dark:bg-pink-900/40 flex items-center justify-center mb-6">
+          <i class="fa-solid fa-shield-halved text-pink-600 dark:text-pink-400 text-2xl"></i>
+        </div>
+        <h3 class="text-lg font-bold text-gray-900 dark:text-white mb-3">Enterprise Security</h3>
+        <p class="text-gray-500 dark:text-gray-400 text-sm leading-relaxed">
+          SOC 2 Type II compliant with end-to-end encryption, SSO, and advanced access controls built in.
+        </p>
+      </div>
+
+      <!-- Card 3 -->
+      <div class="feature-card bg-white dark:bg-gray-800 rounded-3xl p-8 shadow-sm border border-pink-100 dark:border-pink-900/30">
+        <div class="w-14 h-14 rounded-2xl bg-pink-100 dark:bg-pink-900/40 flex items-center justify-center mb-6">
+          <i class="fa-solid fa-chart-line text-pink-600 dark:text-pink-400 text-2xl"></i>
+        </div>
+        <h3 class="text-lg font-bold text-gray-900 dark:text-white mb-3">Smart Analytics</h3>
+        <p class="text-gray-500 dark:text-gray-400 text-sm leading-relaxed">
+          Real-time dashboards with AI-powered insights to help you make data-driven decisions instantly.
+        </p>
+      </div>
+
+      <!-- Card 4 -->
+      <div class="feature-card bg-white dark:bg-gray-800 rounded-3xl p-8 shadow-sm border border-pink-100 dark:border-pink-900/30">
+        <div class="w-14 h-14 rounded-2xl bg-pink-100 dark:bg-pink-900/40 flex items-center justify-center mb-6">
+          <i class="fa-solid fa-puzzle-piece text-pink-600 dark:text-pink-400 text-2xl"></i>
+        </div>
+        <h3 class="text-lg font-bold text-gray-900 dark:text-white mb-3">100+ Integrations</h3>
+        <p class="text-gray-500 dark:text-gray-400 text-sm leading-relaxed">
+          Connect with Slack, Salesforce, HubSpot, Stripe, and over 100 other tools you already love.
+        </p>
+      </div>
+
+      <!-- Card 5 -->
+      <div class="feature-card bg-white dark:bg-gray-800 rounded-3xl p-8 shadow-sm border border-pink-100 dark:border-pink-900/30">
+        <div class="w-14 h-14 rounded-2xl bg-pink-100 dark:bg-pink-900/40 flex items-center justify-center mb-6">
+          <i class="fa-solid fa-users text-pink-600 dark:text-pink-400 text-2xl"></i>
+        </div>
+        <h3 class="text-lg font-bold text-gray-900 dark:text-white mb-3">Team Collaboration</h3>
+        <p class="text-gray-500 dark:text-gray-400 text-sm leading-relaxed">
+          Real-time editing, comments, and live cursors so your team can collaborate without friction.
+        </p>
+      </div>
+
+      <!-- Card 6 -->
+      <div class="feature-card bg-white dark:bg-gray-800 rounded-3xl p-8 shadow-sm border border-pink-100 dark:border-pink-900/30">
+        <div class="w-14 h-14 rounded-2xl bg-pink-100 dark:bg-pink-900/40 flex items-center justify-center mb-6">
+          <i class="fa-solid fa-robot text-pink-600 dark:text-pink-400 text-2xl"></i>
+        </div>
+        <h3 class="text-lg font-bold text-gray-900 dark:text-white mb-3">AI Automation</h3>
+        <p class="text-gray-500 dark:text-gray-400 text-sm leading-relaxed">
+          Automate repetitive tasks with smart workflows powered by our built-in AI engine. Save hours daily.
+        </p>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+
+<!-- ═══════════════════════════════════════════════════════
+     SECTION: ABOUT
+     ═══════════════════════════════════════════════════════ -->
+<section id="about" class="py-24 bg-white dark:bg-gray-950">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="flex flex-col lg:flex-row items-center gap-16">
+
+      <!-- Image Column -->
+      <div class="flex-1 relative">
+        <div class="absolute -inset-4 bg-gradient-to-br from-pink-200 to-pink-400 rounded-3xl opacity-20 blur-2xl"></div>
+        <div class="relative rounded-3xl overflow-hidden shadow-2xl border-4 border-pink-100 dark:border-pink-900/40">
+          <img src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=800&q=80"
+               alt="Team collaboration"
+               class="w-full object-cover aspect-[4/3]" />
+        </div>
+        <!-- Floating badge -->
+        <div class="absolute -bottom-6 -right-6 bg-white dark:bg-gray-800 rounded-2xl shadow-xl px-5 py-4 flex items-center gap-3 border border-pink-100 dark:border-pink-900/30">
+          <div class="w-12 h-12 rounded-xl gradient-cta flex items-center justify-center">
+            <i class="fa-solid fa-trophy text-white text-lg"></i>
+          </div>
+          <div>
+            <p class="text-gray-900 dark:text-white font-bold text-sm">Best SaaS 2024</p>
+            <p class="text-gray-400 text-xs">Product Hunt Award</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Text Column -->
+      <div class="flex-1">
+        <span class="inline-block bg-pink-100 dark:bg-pink-900/40 text-pink-700 dark:text-pink-300 text-xs font-semibold px-4 py-1.5 rounded-full mb-4">
+          About PinkWave
+        </span>
+        <h2 class="text-3xl sm:text-4xl font-black text-gray-900 dark:text-white mb-6">
+          Built for teams that <span class="gradient-text">move fast</span>
+        </h2>
+        <p class="text-gray-500 dark:text-gray-400 mb-8 leading-relaxed">
+          We started PinkWave because we were tired of juggling a dozen disconnected tools. Today,
+          thousands of companies trust us to be their single source of truth — from early-stage
+          startups to Fortune 500 enterprises.
+        </p>
+
+        <!-- Bullet Points -->
+        <ul class="space-y-4 mb-10">
+          <li class="flex items-start gap-3">
+            <div class="w-6 h-6 rounded-full gradient-cta flex items-center justify-center flex-shrink-0 mt-0.5">
+              <i class="fa-solid fa-check text-white text-xs"></i>
+            </div>
+            <div>
+              <p class="font-semibold text-gray-900 dark:text-white text-sm">Zero setup, instant value</p>
+              <p class="text-gray-500 dark:text-gray-400 text-sm">Connect your stack in minutes and get insights immediately.</p>
+            </div>
+          </li>
+          <li class="flex items-start gap-3">
+            <div class="w-6 h-6 rounded-full gradient-cta flex items-center justify-center flex-shrink-0 mt-0.5">
+              <i class="fa-solid fa-check text-white text-xs"></i>
+            </div>
+            <div>
+              <p class="font-semibold text-gray-900 dark:text-white text-sm">World-class support 24/7</p>
+              <p class="text-gray-500 dark:text-gray-400 text-sm">Our team is always online — average response time under 2 minutes.</p>
+            </div>
+          </li>
+          <li class="flex items-start gap-3">
+            <div class="w-6 h-6 rounded-full gradient-cta flex items-center justify-center flex-shrink-0 mt-0.5">
+              <i class="fa-solid fa-check text-white text-xs"></i>
+            </div>
+            <div>
+              <p class="font-semibold text-gray-900 dark:text-white text-sm">Scale from 1 to 10,000 users</p>
+              <p class="text-gray-500 dark:text-gray-400 text-sm">Our infrastructure auto-scales so you never worry about capacity.</p>
+            </div>
+          </li>
+          <li class="flex items-start gap-3">
+            <div class="w-6 h-6 rounded-full gradient-cta flex items-center justify-center flex-shrink-0 mt-0.5">
+              <i class="fa-solid fa-check text-white text-xs"></i>
+            </div>
+            <div>
+              <p class="font-semibold text-gray-900 dark:text-white text-sm">Transparent, predictable pricing</p>
+              <p class="text-gray-500 dark:text-gray-400 text-sm">No hidden fees. Cancel anytime with no lock-in contracts.</p>
+            </div>
+          </li>
+        </ul>
+
+        <a href="#pricing"
+           class="inline-flex items-center gap-2 px-7 py-3.5 gradient-cta text-white font-bold rounded-2xl shadow hover:opacity-90 transition-opacity">
+          Explore Plans <i class="fa-solid fa-arrow-right"></i>
+        </a>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+
+<!-- ═══════════════════════════════════════════════════════
+     SECTION: PRICING
+     ═══════════════════════════════════════════════════════ -->
+<section id="pricing" class="py-24 bg-pink-50 dark:bg-gray-900">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+
+    <!-- Section Header -->
+    <div class="text-center mb-16">
+      <span class="inline-block bg-pink-100 dark:bg-pink-900/40 text-pink-700 dark:text-pink-300 text-xs font-semibold px-4 py-1.5 rounded-full mb-4">
+        Pricing
+      </span>
+      <h2 class="text-3xl sm:text-4xl font-black text-gray-900 dark:text-white mb-4">
+        Simple, <span class="gradient-text">transparent</span> pricing
+      </h2>
+      <p class="text-gray-500 dark:text-gray-400 max-w-lg mx-auto">
+        No hidden fees, no surprises. Start free and upgrade when you're ready.
+      </p>
+    </div>
+
+    <!-- Pricing Cards -->
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-8 items-center">
+
+      <!-- Starter Plan -->
+      <div class="pricing-card bg-white dark:bg-gray-800 rounded-3xl p-8 shadow-sm border border-pink-100 dark:border-pink-900/30">
+        <div class="mb-6">
+          <p class="text-gray-500 dark:text-gray-400 text-sm font-semibold uppercase tracking-widest mb-2">Starter</p>
+          <div class="flex items-end gap-1 mb-1">
+            <span class="text-4xl font-black text-gray-900 dark:text-white">$0</span>
+            <span class="text-gray-400 text-sm mb-2">/mo</span>
+          </div>
+          <p class="text-gray-400 text-sm">Perfect for individuals and side projects</p>
+        </div>
+        <ul class="space-y-3 mb-8">
+          <li class="flex items-center gap-2 text-sm text-gray-600 dark:text-gray-300">
+            <i class="fa-solid fa-check text-pink-500 text-xs"></i> 1 workspace
+          </li>
+          <li class="flex items-center gap-2 text-sm text-gray-600 dark:text-gray-300">
+            <i class="fa-solid fa-check text-pink-500 text-xs"></i> Up to 5 users
+          </li>
+          <li class="flex items-center gap-2 text-sm text-gray-600 dark:text-gray-300">
+            <i class="fa-solid fa-check text-pink-500 text-xs"></i> 5 GB storage
+          </li>
+          <li class="flex items-center gap-2 text-sm text-gray-300 dark:text-gray-600">
+            <i class="fa-solid fa-xmark text-gray-300 dark:text-gray-600 text-xs"></i> Analytics dashboard
+          </li>
+          <li class="flex items-center gap-2 text-sm text-gray-300 dark:text-gray-600">
+            <i class="fa-solid fa-xmark text-gray-300 dark:text-gray-600 text-xs"></i> Priority support
+          </li>
+        </ul>
+        <a href="#"
+           class="block text-center py-3 px-6 rounded-2xl border-2 border-pink-500 text-pink-600 dark:text-pink-400 font-bold text-sm hover:bg-pink-50 dark:hover:bg-pink-900/20 transition-colors">
+          Get Started Free
+        </a>
+      </div>
+
+      <!-- Pro Plan (Popular) -->
+      <div class="pricing-card relative gradient-cta rounded-3xl p-8 shadow-2xl scale-105 z-10">
+        <!-- Popular badge -->
+        <div class="absolute -top-4 left-1/2 -translate-x-1/2">
+          <span class="bg-white text-pink-600 text-xs font-black px-5 py-1.5 rounded-full shadow-lg border border-pink-100">
+            ✦ Most Popular
+          </span>
+        </div>
+
+        <div class="mb-6 mt-2">
+          <p class="text-pink-200 text-sm font-semibold uppercase tracking-widest mb-2">Pro</p>
+          <div class="flex items-end gap-1 mb-1">
+            <span class="text-4xl font-black text-white">$49</span>
+            <span class="text-pink-200 text-sm mb-2">/mo</span>
+          </div>
+          <p class="text-pink-200 text-sm">For growing teams and businesses</p>
+        </div>
+        <ul class="space-y-3 mb-8">
+          <li class="flex items-center gap-2 text-sm text-white">
+            <i class="fa-solid fa-check text-pink-200 text-xs"></i> Unlimited workspaces
+          </li>
+          <li class="flex items-center gap-2 text-sm text-white">
+            <i class="fa-solid fa-check text-pink-200 text-xs"></i> Up to 50 users
+          </li>
+          <li class="flex items-center gap-2 text-sm text-white">
+            <i class="fa-solid fa-check text-pink-200 text-xs"></i> 100 GB storage
+          </li>
+          <li class="flex items-center gap-2 text-sm text-white">
+            <i class="fa-solid fa-check text-pink-200 text-xs"></i> Full analytics dashboard
+          </li>
+          <li class="flex items-center gap-2 text-sm text-white">
+            <i class="fa-solid fa-check text-pink-200 text-xs"></i> Priority email support
+          </li>
+        </ul>
+        <a href="#"
+           class="block text-center py-3 px-6 rounded-2xl bg-white text-pink-600 font-bold text-sm hover:bg-pink-50 transition-colors shadow-lg">
+          Start 14-Day Trial
+        </a>
+      </div>
+
+      <!-- Enterprise Plan -->
+      <div class="pricing-card bg-white dark:bg-gray-800 rounded-3xl p-8 shadow-sm border border-pink-100 dark:border-pink-900/30">
+        <div class="mb-6">
+          <p class="text-gray-500 dark:text-gray-400 text-sm font-semibold uppercase tracking-widest mb-2">Enterprise</p>
+          <div class="flex items-end gap-1 mb-1">
+            <span class="text-4xl font-black text-gray-900 dark:text-white">$199</span>
+            <span class="text-gray-400 text-sm mb-2">/mo</span>
+          </div>
+          <p class="text-gray-400 text-sm">For large organizations at scale</p>
+        </div>
+        <ul class="space-y-3 mb-8">
+          <li class="flex items-center gap-2 text-sm text-gray-600 dark:text-gray-300">
+            <i class="fa-solid fa-check text-pink-500 text-xs"></i> Unlimited workspaces
+          </li>
+          <li class="flex items-center gap-2 text-sm text-gray-600 dark:text-gray-300">
+            <i class="fa-solid fa-check text-pink-500 text-xs"></i> Unlimited users
+          </li>
+          <li class="flex items-center gap-2 text-sm text-gray-600 dark:text-gray-300">
+            <i class="fa-solid fa-check text-pink-500 text-xs"></i> 1 TB storage
+          </li>
+          <li class="flex items-center gap-2 text-sm text-gray-600 dark:text-gray-300">
+            <i class="fa-solid fa-check text-pink-500 text-xs"></i> Advanced analytics + AI
+          </li>
+          <li class="flex items-center gap-2 text-sm text-gray-600 dark:text-gray-300">
+            <i class="fa-solid fa-check text-pink-500 text-xs"></i> Dedicated account manager
+          </li>
+        </ul>
+        <a href="#"
+           class="block text-center py-3 px-6 rounded-2xl border-2 border-pink-500 text-pink-600 dark:text-pink-400 font-bold text-sm hover:bg-pink-50 dark:hover:bg-pink-900/20 transition-colors">
+          Contact Sales
+        </a>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+
+<!-- ═══════════════════════════════════════════════════════
+     SECTION: TESTIMONIALS
+     ═══════════════════════════════════════════════════════ -->
+<section id="testimonials" class="py-24 bg-white dark:bg-gray-950">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+
+    <!-- Section Header -->
+    <div class="text-center mb-16">
+      <span class="inline-block bg-pink-100 dark:bg-pink-900/40 text-pink-700 dark:text-pink-300 text-xs font-semibold px-4 py-1.5 rounded-full mb-4">
+        Testimonials
+      </span>
+      <h2 class="text-3xl sm:text-4xl font-black text-gray-900 dark:text-white mb-4">
+        Loved by <span class="gradient-text">thousands</span>
+      </h2>
+      <p class="text-gray-500 dark:text-gray-400 max-w-lg mx-auto">
+        Don't take our word for it — here's what our customers say.
+      </p>
+    </div>
+
+    <!-- Testimonial Cards -->
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+
+      <!-- Testimonial 1 -->
+      <div class="testimonial-card bg-white dark:bg-gray-800 rounded-3xl p-8 shadow-sm border border-pink-100 dark:border-pink-900/30">
+        <!-- Stars -->
+        <div class="flex gap-1 mb-5">
+          <i class="fa-solid fa-star text-pink-400 text-sm"></i>
+          <i class="fa-solid fa-star text-pink-400 text-sm"></i>
+          <i class="fa-solid fa-star text-pink-400 text-sm"></i>
+          <i class="fa-solid fa-star text-pink-400 text-sm"></i>
+          <i class="fa-solid fa-star text-pink-400 text-sm"></i>
+        </div>
+        <p class="text-gray-600 dark:text-gray-300 text-sm leading-relaxed mb-6">
+          "PinkWave transformed how our team collaborates. We cut our tool stack from 8 apps to 1
+          and saved 15+ hours per week. Absolutely worth every penny."
+        </p>
+        <!-- Author -->
+        <div class="flex items-center gap-3">
+          <img src="https://i.pravatar.cc/64?img=47"
+               alt="Sarah Johnson"
+               class="w-12 h-12 rounded-full object-cover border-2 border-pink-200" />
+          <div>
+            <p class="font-bold text-gray-900 dark:text-white text-sm">Sarah Johnson</p>
+            <p class="text-gray-400 text-xs">Head of Product, Vercel</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Testimonial 2 -->
+      <div class="testimonial-card bg-white dark:bg-gray-800 rounded-3xl p-8 shadow-sm border border-pink-100 dark:border-pink-900/30">
+        <div class="flex gap-1 mb-5">
+          <i class="fa-solid fa-star text-pink-400 text-sm"></i>
+          <i class="fa-solid fa-star text-pink-400 text-sm"></i>
+          <i class="fa-solid fa-star text-pink-400 text-sm"></i>
+          <i class="fa-solid fa-star text-pink-400 text-sm"></i>
+          <i class="fa-solid fa-star text-pink-400 text-sm"></i>
+        </div>
+        <p class="text-gray-600 dark:text-gray-300 text-sm leading-relaxed mb-6">
+          "The analytics dashboard alone is worth the subscription. We identified a churn pattern
+          within the first week and fixed it. Our MRR is up 30% since switching."
+        </p>
+        <div class="flex items-center gap-3">
+          <img src="https://i.pravatar.cc/64?img=12"
+               alt="Marcus Chen"
+               class="w-12 h-12 rounded-full object-cover border-2 border-pink-200" />
+          <div>
+            <p class="font-bold text-gray-900 dark:text-white text-sm">Marcus Chen</p>
+            <p class="text-gray-400 text-xs">CEO, DataFlow Inc.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Testimonial 3 -->
+      <div class="testimonial-card bg-white dark:bg-gray-800 rounded-3xl p-8 shadow-sm border border-pink-100 dark:border-pink-900/30">
+        <div class="flex gap-1 mb-5">
+          <i class="fa-solid fa-star text-pink-400 text-sm"></i>
+          <i class="fa-solid fa-star text-pink-400 text-sm"></i>
+          <i class="fa-solid fa-star text-pink-400 text-sm"></i>
+          <i class="fa-solid fa-star text-pink-400 text-sm"></i>
+          <i class="fa-solid fa-star-half-stroke text-pink-400 text-sm"></i>
+        </div>
+        <p class="text-gray-600 dark:text-gray-300 text-sm leading-relaxed mb-6">
+          "Onboarding took 20 minutes and the support team was outstanding. PinkWave feels like
+          it was designed specifically for our workflow — elegant, powerful, and delightfully pink."
+        </p>
+        <div class="flex items-center gap-3">
+          <img src="https://i.pravatar.cc/64?img=32"
+               alt="Priya Patel"
+               class="w-12 h-12 rounded-full object-cover border-2 border-pink-200" />
+          <div>
+            <p class="font-bold text-gray-900 dark:text-white text-sm">Priya Patel</p>
+            <p class="text-gray-400 text-xs">CTO, NovaTech Startup</p>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+
+<!-- ═══════════════════════════════════════════════════════
+     SECTION: CTA
+     ═══════════════════════════════════════════════════════ -->
+<section id="cta" class="py-24 gradient-cta relative overflow-hidden">
+  <!-- Decorative blobs -->
+  <div class="absolute top-0 left-0 w-72 h-72 bg-white/5 rounded-full -translate-x-1/2 -translate-y-1/2 blur-3xl"></div>
+  <div class="absolute bottom-0 right-0 w-96 h-96 bg-pink-900/30 rounded-full translate-x-1/2 translate-y-1/2 blur-3xl"></div>
+
+  <div class="relative max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+    <span class="inline-block bg-white/15 text-white text-xs font-semibold px-4 py-1.5 rounded-full mb-6 border border-white/20">
+      Ready to get started?
+    </span>
+    <h2 class="text-3xl sm:text-5xl font-black text-white mb-6 leading-tight">
+      Start your free trial<br />today — no credit card required
+    </h2>
+    <p class="text-pink-100 text-lg mb-10 max-w-xl mx-auto">
+      Join 12,000+ teams already using PinkWave. Set up in minutes, cancel anytime.
+    </p>
+    <div class="flex flex-col sm:flex-row gap-4 justify-center">
+      <a href="#pricing"
+         class="px-8 py-4 bg-white text-pink-700 font-bold rounded-2xl shadow-xl hover:bg-pink-50 hover:shadow-2xl transition-all duration-300">
+        Start Free Trial
+        <i class="fa-solid fa-arrow-right ml-2"></i>
+      </a>
+      <a href="#about"
+         class="px-8 py-4 border-2 border-white text-white font-bold rounded-2xl hover:bg-white/10 transition-all duration-300">
+        Learn More
+      </a>
+    </div>
+  </div>
+</section>
+
+
+<!-- ═══════════════════════════════════════════════════════
+     SECTION: FOOTER
+     ═══════════════════════════════════════════════════════ -->
+<footer id="contact" class="bg-gray-950 text-gray-400 pt-16 pb-8">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+
+    <!-- 4-Column Grid -->
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-12 mb-12">
+
+      <!-- Column 1 – Brand -->
+      <div>
+        <a href="#" class="flex items-center gap-2 font-extrabold text-xl mb-4">
+          <span class="w-8 h-8 rounded-lg gradient-cta flex items-center justify-center text-white text-sm font-black">P</span>
+          <span class="gradient-text">PinkWave</span>
+        </a>
+        <p class="text-sm leading-relaxed mb-6">
+          The all-in-one SaaS platform for modern teams. Ship faster, collaborate smarter.
+        </p>
+        <!-- Social Icons -->
+        <div class="flex gap-3">
+          <a href="#" aria-label="Twitter" class="w-9 h-9 rounded-xl bg-gray-800 hover:bg-pink-800 flex items-center justify-center transition-colors">
+            <i class="fa-brands fa-x-twitter text-sm"></i>
+          </a>
+          <a href="#" aria-label="LinkedIn" class="w-9 h-9 rounded-xl bg-gray-800 hover:bg-pink-800 flex items-center justify-center transition-colors">
+            <i class="fa-brands fa-linkedin-in text-sm"></i>
+          </a>
+          <a href="#" aria-label="GitHub" class="w-9 h-9 rounded-xl bg-gray-800 hover:bg-pink-800 flex items-center justify-center transition-colors">
+            <i class="fa-brands fa-github text-sm"></i>
+          </a>
+          <a href="#" aria-label="Instagram" class="w-9 h-9 rounded-xl bg-gray-800 hover:bg-pink-800 flex items-center justify-center transition-colors">
+            <i class="fa-brands fa-instagram text-sm"></i>
+          </a>
+        </div>
+      </div>
+
+      <!-- Column 2 – Product -->
+      <div>
+        <h4 class="text-white font-bold text-sm mb-5">Product</h4>
+        <ul class="space-y-3 text-sm">
+          <li><a href="#features" class="hover:text-pink-400 transition-colors">Features</a></li>
+          <li><a href="#pricing"  class="hover:text-pink-400 transition-colors">Pricing</a></li>
+          <li><a href="#"         class="hover:text-pink-400 transition-colors">Changelog</a></li>
+          <li><a href="#"         class="hover:text-pink-400 transition-colors">Roadmap</a></li>
+          <li><a href="#"         class="hover:text-pink-400 transition-colors">API Docs</a></li>
+        </ul>
+      </div>
+
+      <!-- Column 3 – Company -->
+      <div>
+        <h4 class="text-white font-bold text-sm mb-5">Company</h4>
+        <ul class="space-y-3 text-sm">
+          <li><a href="#about" class="hover:text-pink-400 transition-colors">About Us</a></li>
+          <li><a href="#"      class="hover:text-pink-400 transition-colors">Blog</a></li>
+          <li><a href="#"      class="hover:text-pink-400 transition-colors">Careers</a></li>
+          <li><a href="#"      class="hover:text-pink-400 transition-colors">Press Kit</a></li>
+          <li><a href="#"      class="hover:text-pink-400 transition-colors">Partners</a></li>
+        </ul>
+      </div>
+
+      <!-- Column 4 – Legal / Newsletter -->
+      <div>
+        <h4 class="text-white font-bold text-sm mb-5">Stay in the loop</h4>
+        <p class="text-sm mb-4">Get product updates and SaaS tips delivered to your inbox.</p>
+        <form onsubmit="return false;" class="flex flex-col gap-3">
+          <input type="email"
+                 placeholder="you@company.com"
+                 class="bg-gray-800 border border-gray-700 rounded-xl px-4 py-2.5 text-sm text-gray-200 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-pink-500 transition" />
+          <button type="submit"
+                  class="py-2.5 gradient-cta text-white text-sm font-bold rounded-xl hover:opacity-90 transition-opacity">
+            Subscribe
+          </button>
+        </form>
+        <ul class="mt-6 space-y-2 text-sm">
+          <li><a href="#" class="hover:text-pink-400 transition-colors">Privacy Policy</a></li>
+          <li><a href="#" class="hover:text-pink-400 transition-colors">Terms of Service</a></li>
+          <li><a href="#" class="hover:text-pink-400 transition-colors">Cookie Policy</a></li>
+        </ul>
+      </div>
+
+    </div>
+
+    <!-- Bottom bar -->
+    <div class="border-t border-gray-800 pt-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-sm">
+      <p>© 2024 PinkWave, Inc. All rights reserved.</p>
+      <p>Made with <i class="fa-solid fa-heart text-pink-500"></i> for modern teams.</p>
+    </div>
+
+  </div>
+</footer>
+
+
+<!-- ═══════════════════════════════════════════════════════
+     JAVASCRIPT
+     ═══════════════════════════════════════════════════════ -->
+<script>
+  /* ── Mobile menu toggle ─────────────────────────────── */
+  const menuToggle = document.getElementById('menu-toggle');
+  const mobileMenu = document.getElementById('mobile-menu');
+  const menuIcon   = document.getElementById('menu-icon');
+
+  menuToggle.addEventListener('click', () => {
+    const isOpen = mobileMenu.classList.contains('open');
+    mobileMenu.classList.toggle('open',   !isOpen);
+    mobileMenu.classList.toggle('closed',  isOpen);
+    menuIcon.classList.toggle('fa-bars',  isOpen);
+    menuIcon.classList.toggle('fa-xmark', !isOpen);
+  });
+
+  function closeMenu() {
+    mobileMenu.classList.replace('open', 'closed');
+    menuIcon.classList.add('fa-bars');
+    menuIcon.classList.remove('fa-xmark');
+  }
+
+  /* ── Dark mode toggle ───────────────────────────────── */
+  const html         = document.documentElement;
+  const darkToggle   = document.getElementById('dark-toggle');
+  const darkToggleMob= document.getElementById('dark-toggle-mobile');
+  const darkIcon     = document.getElementById('dark-icon');
+  const darkIconMob  = document.getElementById('dark-icon-mobile');
+
+  // Apply saved preference
+  if (localStorage.getItem('theme') === 'dark' ||
+      (!localStorage.getItem('theme') && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+    html.classList.add('dark');
+    darkIcon.classList.replace('fa-moon', 'fa-sun');
+    darkIconMob.classList.replace('fa-moon', 'fa-sun');
+  }
+
+  function toggleDark() {
+    const isDark = html.classList.toggle('dark');
+    localStorage.setItem('theme', isDark ? 'dark' : 'light');
+    const on  = isDark ? 'fa-sun'  : 'fa-moon';
+    const off = isDark ? 'fa-moon' : 'fa-sun';
+    darkIcon.classList.replace(off, on);
+    darkIconMob.classList.replace(off, on);
+  }
+
+  darkToggle.addEventListener('click', toggleDark);
+  darkToggleMob.addEventListener('click', toggleDark);
+
+  /* ── Navbar scroll shadow ───────────────────────────── */
+  const navbar = document.getElementById('navbar');
+  window.addEventListener('scroll', () => {
+    navbar.classList.toggle('nav-scrolled', window.scrollY > 20);
+  });
+</script>
+
+</body>
+</html>
