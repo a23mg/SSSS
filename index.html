@@ -5,18 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>PinkWave – Modern SaaS Platform</title>
 
-  <!-- Tailwind CSS CDN -->
-  <script src="https://cdn.tailwindcss.com"></script>
-
-  <!-- Font Awesome Icons -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
-
-  <!-- Google Fonts -->
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
-
-  <!-- Tailwind Config & Custom Styles -->
+  <!-- Tailwind Config (must be defined before the CDN script loads) -->
   <script>
     tailwind.config = {
       darkMode: 'class',
@@ -41,6 +30,23 @@
       },
     };
   </script>
+
+  <!-- Tailwind CSS CDN (loaded after config so the custom settings are applied) -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- Font Awesome Icons -->
+  <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+    integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9cN3e4qXGpcxG3E77s3UksdQRVOqCaz1z0PqVZhzfjwW4rGy3g=="
+    crossorigin="anonymous"
+    referrerpolicy="no-referrer"
+  />
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
 
   <style>
     /* ── Base ────────────────────────────────────────────── */
@@ -110,7 +116,7 @@
     <div class="flex items-center justify-between h-16">
 
       <!-- Logo -->
-      <a href="#" class="flex items-center gap-2 font-extrabold text-xl">
+      <a href="#home" class="flex items-center gap-2 font-extrabold text-xl">
         <span class="w-8 h-8 rounded-lg gradient-cta flex items-center justify-center text-white text-sm font-black">P</span>
         <span class="gradient-text">PinkWave</span>
       </a>
@@ -128,6 +134,7 @@
         <!-- Dark Mode Toggle -->
         <button id="dark-toggle"
                 aria-label="Toggle dark mode"
+                aria-pressed="false"
                 class="w-9 h-9 rounded-full flex items-center justify-center text-gray-500 dark:text-gray-400 hover:bg-pink-50 dark:hover:bg-pink-900/20 transition-colors">
           <i id="dark-icon" class="fa-solid fa-moon text-base"></i>
         </button>
@@ -141,6 +148,8 @@
       <!-- Mobile Hamburger -->
       <button id="menu-toggle"
               aria-label="Toggle menu"
+              aria-controls="mobile-menu"
+              aria-expanded="false"
               class="md:hidden w-9 h-9 flex items-center justify-center rounded-lg text-gray-600 dark:text-gray-300 hover:bg-pink-50 dark:hover:bg-pink-900/20 transition-colors">
         <i id="menu-icon" class="fa-solid fa-bars text-lg"></i>
       </button>
@@ -150,19 +159,19 @@
   <!-- Mobile Menu -->
   <div id="mobile-menu" class="closed md:hidden bg-white dark:bg-gray-950 border-t border-pink-100 dark:border-pink-900/30">
     <div class="max-w-7xl mx-auto px-4 py-4 flex flex-col gap-3">
-      <a href="#home"         class="py-2 text-gray-700 dark:text-gray-300 hover:text-pink-600 dark:hover:text-pink-400 font-medium transition-colors" onclick="closeMenu()">Home</a>
-      <a href="#features"     class="py-2 text-gray-700 dark:text-gray-300 hover:text-pink-600 dark:hover:text-pink-400 font-medium transition-colors" onclick="closeMenu()">Features</a>
-      <a href="#pricing"      class="py-2 text-gray-700 dark:text-gray-300 hover:text-pink-600 dark:hover:text-pink-400 font-medium transition-colors" onclick="closeMenu()">Pricing</a>
-      <a href="#contact"      class="py-2 text-gray-700 dark:text-gray-300 hover:text-pink-600 dark:hover:text-pink-400 font-medium transition-colors" onclick="closeMenu()">Contact</a>
+      <a href="#home"         class="py-2 text-gray-700 dark:text-gray-300 hover:text-pink-600 dark:hover:text-pink-400 font-medium transition-colors">Home</a>
+      <a href="#features"     class="py-2 text-gray-700 dark:text-gray-300 hover:text-pink-600 dark:hover:text-pink-400 font-medium transition-colors">Features</a>
+      <a href="#pricing"      class="py-2 text-gray-700 dark:text-gray-300 hover:text-pink-600 dark:hover:text-pink-400 font-medium transition-colors">Pricing</a>
+      <a href="#contact"      class="py-2 text-gray-700 dark:text-gray-300 hover:text-pink-600 dark:hover:text-pink-400 font-medium transition-colors">Contact</a>
       <div class="flex items-center gap-3 pt-2 border-t border-pink-100 dark:border-pink-900/30">
         <button id="dark-toggle-mobile"
                 aria-label="Toggle dark mode"
+                aria-pressed="false"
                 class="w-9 h-9 rounded-full flex items-center justify-center text-gray-500 dark:text-gray-400 hover:bg-pink-50 dark:hover:bg-pink-900/20 transition-colors">
           <i id="dark-icon-mobile" class="fa-solid fa-moon text-base"></i>
         </button>
         <a href="#pricing"
-           class="flex-1 text-center py-2 rounded-full gradient-cta text-white text-sm font-semibold shadow hover:opacity-90 transition-opacity"
-           onclick="closeMenu()">
+           class="flex-1 text-center py-2 rounded-full gradient-cta text-white text-sm font-semibold shadow hover:opacity-90 transition-opacity">
           Get Started
         </a>
       </div>
@@ -529,10 +538,10 @@
             <i class="fa-solid fa-xmark text-gray-300 dark:text-gray-600 text-xs"></i> Priority support
           </li>
         </ul>
-        <a href="#"
-           class="block text-center py-3 px-6 rounded-2xl border-2 border-pink-500 text-pink-600 dark:text-pink-400 font-bold text-sm hover:bg-pink-50 dark:hover:bg-pink-900/20 transition-colors">
+        <button type="button"
+                class="block w-full text-center py-3 px-6 rounded-2xl border-2 border-pink-500 text-pink-600 dark:text-pink-400 font-bold text-sm hover:bg-pink-50 dark:hover:bg-pink-900/20 transition-colors">
           Get Started Free
-        </a>
+        </button>
       </div>
 
       <!-- Pro Plan (Popular) -->
@@ -569,10 +578,10 @@
             <i class="fa-solid fa-check text-pink-200 text-xs"></i> Priority email support
           </li>
         </ul>
-        <a href="#"
-           class="block text-center py-3 px-6 rounded-2xl bg-white text-pink-600 font-bold text-sm hover:bg-pink-50 transition-colors shadow-lg">
+        <button type="button"
+                class="block w-full text-center py-3 px-6 rounded-2xl bg-white text-pink-600 font-bold text-sm hover:bg-pink-50 transition-colors shadow-lg">
           Start 14-Day Trial
-        </a>
+        </button>
       </div>
 
       <!-- Enterprise Plan -->
@@ -602,10 +611,10 @@
             <i class="fa-solid fa-check text-pink-500 text-xs"></i> Dedicated account manager
           </li>
         </ul>
-        <a href="#"
-           class="block text-center py-3 px-6 rounded-2xl border-2 border-pink-500 text-pink-600 dark:text-pink-400 font-bold text-sm hover:bg-pink-50 dark:hover:bg-pink-900/20 transition-colors">
+        <button type="button"
+                class="block w-full text-center py-3 px-6 rounded-2xl border-2 border-pink-500 text-pink-600 dark:text-pink-400 font-bold text-sm hover:bg-pink-50 dark:hover:bg-pink-900/20 transition-colors">
           Contact Sales
-        </a>
+        </button>
       </div>
 
     </div>
@@ -758,7 +767,7 @@
 
       <!-- Column 1 – Brand -->
       <div>
-        <a href="#" class="flex items-center gap-2 font-extrabold text-xl mb-4">
+        <a href="#home" class="flex items-center gap-2 font-extrabold text-xl mb-4">
           <span class="w-8 h-8 rounded-lg gradient-cta flex items-center justify-center text-white text-sm font-black">P</span>
           <span class="gradient-text">PinkWave</span>
         </a>
@@ -811,7 +820,9 @@
         <h4 class="text-white font-bold text-sm mb-5">Stay in the loop</h4>
         <p class="text-sm mb-4">Get product updates and SaaS tips delivered to your inbox.</p>
         <form onsubmit="return false;" class="flex flex-col gap-3">
-          <input type="email"
+          <label for="newsletter-email" class="sr-only">Email address</label>
+          <input id="newsletter-email"
+                 type="email"
                  placeholder="you@company.com"
                  class="bg-gray-800 border border-gray-700 rounded-xl px-4 py-2.5 text-sm text-gray-200 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-pink-500 transition" />
           <button type="submit"
@@ -847,33 +858,47 @@
   const mobileMenu = document.getElementById('mobile-menu');
   const menuIcon   = document.getElementById('menu-icon');
 
+  function closeMenu() {
+    mobileMenu.classList.replace('open', 'closed');
+    menuIcon.classList.add('fa-bars');
+    menuIcon.classList.remove('fa-xmark');
+    menuToggle.setAttribute('aria-expanded', 'false');
+  }
+
   menuToggle.addEventListener('click', () => {
     const isOpen = mobileMenu.classList.contains('open');
     mobileMenu.classList.toggle('open',   !isOpen);
     mobileMenu.classList.toggle('closed',  isOpen);
     menuIcon.classList.toggle('fa-bars',  isOpen);
     menuIcon.classList.toggle('fa-xmark', !isOpen);
+    menuToggle.setAttribute('aria-expanded', String(!isOpen));
   });
 
-  function closeMenu() {
-    mobileMenu.classList.replace('open', 'closed');
-    menuIcon.classList.add('fa-bars');
-    menuIcon.classList.remove('fa-xmark');
-  }
+  /* Delegate close on any link click inside the mobile menu */
+  mobileMenu.addEventListener('click', (e) => {
+    if (e.target.closest('a')) closeMenu();
+  });
 
   /* ── Dark mode toggle ───────────────────────────────── */
-  const html         = document.documentElement;
-  const darkToggle   = document.getElementById('dark-toggle');
-  const darkToggleMob= document.getElementById('dark-toggle-mobile');
-  const darkIcon     = document.getElementById('dark-icon');
-  const darkIconMob  = document.getElementById('dark-icon-mobile');
+  const html          = document.documentElement;
+  const darkToggle    = document.getElementById('dark-toggle');
+  const darkToggleMob = document.getElementById('dark-toggle-mobile');
+  const darkIcon      = document.getElementById('dark-icon');
+  const darkIconMob   = document.getElementById('dark-icon-mobile');
+
+  function setDarkPressed(isDark) {
+    darkToggle.setAttribute('aria-pressed', String(isDark));
+    darkToggleMob.setAttribute('aria-pressed', String(isDark));
+  }
 
   // Apply saved preference
-  if (localStorage.getItem('theme') === 'dark' ||
-      (!localStorage.getItem('theme') && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+  const savedDark = localStorage.getItem('theme') === 'dark' ||
+      (!localStorage.getItem('theme') && window.matchMedia('(prefers-color-scheme: dark)').matches);
+  if (savedDark) {
     html.classList.add('dark');
     darkIcon.classList.replace('fa-moon', 'fa-sun');
     darkIconMob.classList.replace('fa-moon', 'fa-sun');
+    setDarkPressed(true);
   }
 
   function toggleDark() {
@@ -883,6 +908,7 @@
     const off = isDark ? 'fa-moon' : 'fa-sun';
     darkIcon.classList.replace(off, on);
     darkIconMob.classList.replace(off, on);
+    setDarkPressed(isDark);
   }
 
   darkToggle.addEventListener('click', toggleDark);
